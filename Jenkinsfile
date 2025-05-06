@@ -5,19 +5,19 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    echo "Melakukan pengujian aplikasi..."
-                    echo "Menjalankan pipeline untuk branch ${BRANCH_NAME}"
+                    echo "Testing the application..."
+                    echo "Executing pipeline for branch ${BRANCH_NAME}" 
                 }
             }
         }
 
         stage('Build') {
             when {
-                expression { BRANCH_NAME == 'main' }
+                expression { BRANCH_NAME == 'main' } 
             }
             steps {
                 script {
-                    echo "Membangun aplikasi..."
+                    echo "Building the application..."
                 }
             }
         }
@@ -28,7 +28,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "Melakukan deployment aplikasi..."
+                    echo "Deploying the application..."
                 }
             }
         }
