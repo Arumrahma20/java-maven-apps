@@ -1,30 +1,35 @@
-@Library('jenkins-shared-library') _
-
 pipeline {
     agent any
 
     stages {
-        stage('Build JAR') {
+        stage('Test') {
             steps {
-                buildJar()
+                script {
+                    echo "Melakukan pengujian aplikasi..."
+                    echo "Menjalankan pipeline untuk branch ${BRANCH_NAME}"
+                }
             }
         }
 
-        stage('Docker Login') {
+        stage('Build') {
+            when {
+                expression { BRANCH_NAME == 'main' }
+            }
             steps {
-                dockerLogin()
+                script {
+                    echo "Membangun aplikasi..."
+                }
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                dockerBuildImage('azeyna/jma:3.0')
+        stage('Deploy') {
+            when {
+                expression { BRANCH_NAME == 'main' }
             }
-        }
-
-        stage('Push Docker Image') {
             steps {
-                dockerPush('azeyna/jma:3.0')
+                script {
+                    echo "Melakukan deployment aplikasi..."
+                }
             }
         }
     }
